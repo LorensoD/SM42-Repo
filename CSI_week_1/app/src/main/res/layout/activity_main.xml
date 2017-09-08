@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context="csi.fhict.org.csi_week_1.MainActivity">
 
 
@@ -11,7 +12,6 @@
         android:layout_width="385dp"
         android:layout_height="510dp"
         android:orientation="vertical"
-        android:background="#000000"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="0dp">
 
@@ -102,7 +102,7 @@
 
                 </TableRow>
 
-                
+
 
             </TableLayout>
         </LinearLayout>
