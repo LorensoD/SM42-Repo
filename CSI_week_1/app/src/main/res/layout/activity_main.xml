@@ -6,10 +6,12 @@
     android:layout_height="match_parent"
     tools:context="csi.fhict.org.csi_week_1.MainActivity">
 
+
     <LinearLayout
         android:layout_width="385dp"
         android:layout_height="510dp"
         android:orientation="vertical"
+        android:background="#000000"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="0dp">
 
@@ -17,54 +19,90 @@
             android:id="@+id/imageView"
             android:layout_width="288dp"
             android:layout_height="178dp"
-            app:srcCompat="@drawable/boefje"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/boefje" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
             <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
                 <TableRow>
 
                     <TextView
+                        android:fontFamily="monospace"
                         android:padding="3dp"
-                        android:text="Naam:" />
+                        android:text="Naam:"
+                        android:textColor="#00FF00"
+                        android:textSize="20sp" />
+
                     <TextView
-                        android:text="X"
-                        android:padding="3dp" />
+                        android:fontFamily="monospace"
+                        android:padding="3dp"
+                        android:text="Henk Jan Rip"
+                        android:textColor="#00FF00"
+                        android:textSize="20sp" />
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
-                        android:text="X"
-                        android:padding="3dp" />
+                        android:fontFamily="monospace"
+                        android:padding="3dp"
+                        android:text="Geslacht:"
+                        android:textColor="#00FF00"
+                        android:textSize="20sp" />
+
                     <TextView
-                        android:text="X"
-                        android:padding="3dp" />
+                        android:fontFamily="monospace"
+                        android:padding="3dp"
+                        android:text="Attack helicopter"
+                        android:textColor="#00FF00"
+                        android:textSize="20sp" />
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
-                        android:text="X"
-                        android:padding="3dp" />
+                        android:fontFamily="monospace"
+                        android:padding="3dp"
+                        android:text="Leeftijd:"
+                        android:textColor="#00FF00"
+                        android:textSize="20sp" />
+
                     <TextView
-                        android:text="X"
-                        android:padding="3dp" />
+                        android:fontFamily="monospace"
+                        android:padding="3dp"
+                        android:text="21"
+                        android:textColor="#00FF00"
+                        android:textSize="20sp" />
                 </TableRow>
 
                 <TableRow>
+
                     <TextView
-                        android:text="X"
-                        android:padding="3dp" />
+                        android:fontFamily="monospace"
+                        android:padding="3dp"
+                        android:text="Beloning:"
+                        android:textColor="#00FF00"
+                        android:textSize="20sp" />
+
                     <TextView
-                        android:text="X"
-                        android:padding="3dp" />
+                        android:fontFamily="monospace"
+                        android:padding="3dp"
+                        android:text="$420.000"
+                        android:textColor="#00FF00"
+                        android:textSize="20sp" />
+
                 </TableRow>
+
+                
 
             </TableLayout>
         </LinearLayout>
