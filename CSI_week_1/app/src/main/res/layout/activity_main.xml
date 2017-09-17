@@ -145,7 +145,7 @@
                             android:background="#00FF00"
                             android:backgroundTint="#00FF00"
                             android:text="AANGEVEN!"
-                            android:textColor="@android:color/white"
+                            android:textColor="@color/black"
                             android:textSize="18sp"
                             android:typeface="monospace" />
                     </LinearLayout>
