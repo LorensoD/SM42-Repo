@@ -13,7 +13,7 @@
         android:layout_weight="1">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/btnMakePic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -29,8 +29,8 @@
             android:id="@+id/button2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/button3"
-            android:layout_alignBottom="@+id/button3"
+            android:layout_alignBaseline="@+id/btnMakePic"
+            android:layout_alignBottom="@+id/btnMakePic"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_weight="1"
@@ -41,12 +41,12 @@
             android:textColor="@color/black" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/plaatjeBoef"
             android:layout_width="wrap_content"
             android:layout_height="414dp"
             app:srcCompat="@drawable/boefje"
             android:layout_marginTop="7dp"
-            android:layout_below="@+id/button3"
+            android:layout_below="@+id/btnMakePic"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -54,7 +54,7 @@
             android:id="@+id/callPopo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView2"
+            android:layout_below="@+id/plaatjeBoef"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="7dp"
             android:background="#00FF00"
