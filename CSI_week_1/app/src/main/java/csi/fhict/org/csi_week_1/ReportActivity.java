@@ -7,8 +7,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +25,8 @@ import java.io.File;
 
 public class ReportActivity extends AppCompatActivity {
 
-    private static final byte CALL_PERMISSION = 0;
-    private static final byte CAMERA_PERMISSION = 0;
+    private static final byte CALL_PERMISSION = 1;
+    private static final byte CAMERA_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +35,19 @@ public class ReportActivity extends AppCompatActivity {
 
         Button callPopo = (Button)findViewById(R.id.callPopo);
         callPopo.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
-                checkCallPermission();
+                makeCall();
             }
         });
 
         Button btnMakePic = (Button)findViewById(R.id.btnMakePic);
         btnMakePic.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
-                checkCameraPermission();
+                showCamera();
             }
         });
 
@@ -51,74 +55,50 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     //Controleer of de benodigde permissions gegeven zijn en vraagt er om als dat niet het geval is
-    protected void checkCallPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
-                //Laat een verklaring aan de gebruiker zien
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, CALL_PERMISSION);
-            }
-        } else {
-            callDaPolice();
-        }
-    }
+//    protected void checkCallPermission() {
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+//
+//            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
+//                //Laat een verklaring aan de gebruiker zien
+//            } else {
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, CALL_PERMISSION);
+//            }
+//        } else {
+//            callDaPolice();
+//        }
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case CALL_PERMISSION:
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    callDaPolice();
+        if(requestCode == CAMERA_PERMISSION) {
+            //Recieved permission result for camera permission.
 
-                } else {
+            // Check if the only required permission has been granted
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Permission had been granted start camera intent
+                dispatchTakePictureIntent();
+            } else {
+                Toast.makeText(this, "Geen toegang tot camera verleend", Toast.LENGTH_SHORT).show();
+            }
 
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-                }
-                break;
-//
-//            case CAMERA_PERMISSION:
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    dispatchTakePictureIntent();
-//
-//                } else {
-//
-//                    // permission denied, boo! Disable the
-//                    // functionality that depends on this permission.
-//                }
-//                break;
 
+        } else if (requestCode == CALL_PERMISSION) {
+            //Recieved permission result for phone permission.
+
+            // Check if the only required permission has been granted
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Permission had been granted start phone intent
+                callDaPolice();
+            } else {
+                Toast.makeText(this, "Geen toegang tot telefoon verleend", Toast.LENGTH_SHORT).show();
+            }
         }
 
 
     }
 
     public void callDaPolice(){
-        startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", "112", null)));
-    }
-
-    protected void checkCameraPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                //Laat een verklaring aan de gebruiker zien
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
-            }
-        } else {
-            dispatchTakePictureIntent();
-        }
-    }
-
-    public void takePhoto() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
-        //imageUri = Uri.fromFile(photo);
-        startActivityForResult(intent, CAMERA_PERMISSION);
+        startActivity(new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", "113", null)));
     }
 
     private void dispatchTakePictureIntent() {
@@ -128,39 +108,36 @@ public class ReportActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode) {
-//            case CAMERA_PERMISSION:
-//                if (resultCode == this.RESULT_OK) {
-//                    Uri selectedImage = imageUri;
-//                    getContentResolver().notifyChange(selectedImage, null);
-//                    ImageView imageView = (ImageView) findViewById(R.id.plaatjeBoef);
-//                    ContentResolver cr = getContentResolver();
-//                    Bitmap bitmap;
-//                    try {
-//                        bitmap = android.provider.MediaStore.Images.Media
-//                                .getBitmap(cr, selectedImage);
-//
-//                        imageView.setImageBitmap(bitmap);
-//                        Toast.makeText(this, selectedImage.toString(),
-//                                Toast.LENGTH_LONG).show();
-//                    } catch (Exception e) {
-//                        Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT)
-//                                .show();
-//                        Log.e("Camera", e.toString());
-//                    }
-//                }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void showCamera() {
+        //Check if camera permission is granted
+        if(checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            //Camera permission is granted -> dispatch camera intent
+            dispatchTakePictureIntent();
+        } else {
+            //Camera permission not granted
+            if(shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+                Toast.makeText(this, "Toegang tot de camera is nodig om een foto van het boefje te maken!", Toast.LENGTH_SHORT).show();
+            }
 
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION);
+        }
+    }
 
-//    public void openCamera() {
-//        camera c = null;
-//        try {
-//            c = Camera.open(); // attempt to get a Camera instance
-//        } catch (Exception e) {
-//            // Camera is not available (in use or does not exist)
-//        }
-//        return c; // returns null if camera is unavailable
-//    }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void makeCall() {
+        //Check if call permission is granted
+        if(checkSelfPermission(Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            //Phone permission is granted -> dispatch phone intent
+            callDaPolice();
+        } else {
+            //Phone permission not granted
+            if(shouldShowRequestPermissionRationale(Manifest.permission.CALL_PHONE)) {
+                Toast.makeText(this, "Toegang tot de telefoon is nodig om 112 te bellen!", Toast.LENGTH_SHORT).show();
+            }
+
+            requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, CALL_PERMISSION);
+        }
+    }
+
 }
